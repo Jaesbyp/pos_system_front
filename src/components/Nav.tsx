@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../public/images/PostLogo5.png";
+import logo from "../../public/images/PostLogo5.webp";
 import Option from "./Option";
 import Link from "next/link";
 import { UrlObject } from "url";
@@ -16,7 +16,6 @@ export interface IOption {
 function Navegador({
   options,
   imageRedirect,
-
 }: {
   options: IOption[];
   imageRedirect: string;
@@ -35,7 +34,10 @@ function Navegador({
         {options.map((option, index) => {
           if (option.type === "button") {
             return (
-              <div className="h-5/6 flex items-center justify-center gap-6 hover:bg-blue-600 my-4 rounded-md" key={index}>
+              <div
+                className="h-5/6 flex items-center justify-center gap-6 hover:bg-blue-600 my-4 rounded-md"
+                key={index}
+              >
                 <Button
                   texto={option.label as string}
                   key={option.label as string}
@@ -47,7 +49,10 @@ function Navegador({
 
           if (option.type === "option") {
             return (
-              <div className="h-5/6 flex items-center justify-center gap-6 hover:border-green-500  hover:text-blue-400 px-4 my-4 rounded-md" key={index}>
+              <div
+                className="h-5/6 flex items-center justify-center gap-6 hover:border-green-500  hover:text-blue-400 px-4 my-4 rounded-md"
+                key={index}
+              >
                 <Option
                   opcion={option.label}
                   redirect={option.redirect as string}

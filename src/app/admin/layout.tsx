@@ -7,7 +7,7 @@ import "primereact/resources/themes/bootstrap4-dark-purple/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Image from "next/image";
-import Logo from "../../../public/images/PostLogo5.png";
+import Logo from "../../../public/images/PostLogo5.webp";
 
 export default function AdminLayout({
   children,
@@ -57,11 +57,11 @@ export default function AdminLayout({
       icon: "pi pi-fw pi-wrench",
       url: "/admin/invoiceList",
     },
-    {
-      label: "Configuración",
-      icon: "pi pi-fw pi-wrench",
-      url: "/admin/settings",
-    },
+    // {
+    //   label: "Configuración",
+    //   icon: "pi pi-fw pi-wrench",
+    //   url: "/admin/settings",
+    // },
     {
       label: "Salir",
       icon: "pi pi-fw pi-sign-out",

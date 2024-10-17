@@ -6,7 +6,7 @@ import "primereact/resources/themes/bootstrap4-dark-purple/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import Image from "next/image";
-import Logo from "../../../public/images/PostLogo5.png";
+import Logo from "../../../public/images/PostLogo5.webp";
 import { Menu } from "primereact/menu";
 
 const items: MenuItem[] = [

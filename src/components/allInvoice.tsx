@@ -165,7 +165,7 @@ export default function allInvoice() {
                 header={col.header}
                 body={(rowData) => (
                   <div className="action-buttons flex gap-6">
-                    <Button
+                    {/* <Button
                       severity="help"
                       icon="pi pi-file"
                       onClick={() => handleXMLCreation(rowData)}
@@ -173,7 +173,7 @@ export default function allInvoice() {
                     <Button
                       icon="pi pi-file-pdf"
                       onClick={() => downloadPDF(rowData)}
-                    />
+                    /> */}
                     <Button
                       severity="info"
                       icon="pi pi-window-maximize"
