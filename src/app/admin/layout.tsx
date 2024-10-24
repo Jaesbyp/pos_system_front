@@ -32,6 +32,22 @@ export default function AdminLayout({
       ],
     },
     {
+      label: "Compras",
+      icon: "pi pi-fw pi-tag",
+      items: [
+        {
+          label: "Administrar Proveedores",
+          icon: "pi pi-fw- pi-person",
+          url: "/admin/providers",
+        },
+        {
+          label: "Administrar Compras",
+          icon: "pi pi-fw pi-tag",
+          url: "/admin/pucharses",
+        },
+      ],
+    },
+    {
       label: "Usuarios",
       icon: "pi pi-fw pi-user",
       url: "/admin/users",
@@ -73,8 +89,8 @@ export default function AdminLayout({
   ];
 
   return (
-    <div className="flex ">
-      <div className="min-h-screen bg-jair">
+    <div className="grid grid-cols-12 ">
+      <div className="col-span-2 min-h-screen bg-jair">
         <div className="h-full ">
           <div className="flex justify-center items-center">
             <Image
@@ -85,13 +101,10 @@ export default function AdminLayout({
               className="py-2 "
             />
           </div>
-          <PanelMenu
-            model={items}
-            className="w-52 md:w-25rem mb-4 bg-gray-700"
-          />
+          <PanelMenu model={items} className="md:w-25rem mb-4 bg-gray-700" />
         </div>
       </div>
-      <div className="flex justify-center items-center w-11/12 bg-slate-600">
+      <div className="col-span-10 p-4 m-0 outline-none bg-slate-600 max-w-[86vw] max-h-[100vh]">
         {children}
       </div>
     </div>

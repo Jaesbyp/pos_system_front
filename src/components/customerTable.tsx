@@ -11,6 +11,7 @@ import { IDENTIFICATION_TYPES } from "@/store/types/Tables";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
@@ -20,7 +21,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import ModifyClientDialog from "@/components/modifyClientDialog";
 import validateDni, { validateRuc } from "@/store/utils/dniRucValidator";
-import { id } from "date-fns/locale";
+import {
+  DEVICE_TYPE_ENUM,
+  UseDeviceScreenType,
+} from "@/hooks/use-resize-listener";
 
 export default function CustomerTable({
   setCustomersContext,
@@ -227,9 +231,11 @@ export default function CustomerTable({
     });
   });
 
+  const deviceType = UseDeviceScreenType();
+
   return (
     <>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8  max-h-[95vh] h-full">
         <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
           <span>
             <i className="pi pi-search" style={{ fontSize: "1.5rem" }}></i>
@@ -237,32 +243,41 @@ export default function CustomerTable({
           Listado de Clientes
         </h1>
         <div className="flex gap-4 justify-between">
-          <div className="p-input-icon-left">
-            <i className="pi pi-search" style={{ fontSize: "1.2rem" }}></i>
+          <span className="p-input-icon-left">
+            <i className="pi pi-search"></i>
             <InputText
               type="search"
               placeholder="Buscar"
               value={searchTerm}
               onChange={handleSearch}
-              className="w-96"
+              className="md:w-96 w-52 md:h-full h-11"
             />
-          </div>
+          </span>
           <Button
-            label="Agregar Cliente"
+            label={
+              deviceType === DEVICE_TYPE_ENUM.MOBILE ? "" : "Agregar cliente"
+            }
             severity="info"
             raised
             icon="pi pi-plus"
-            className="p-button-success"
+            className="p-button-success md:w-36 w-18 text-xs md:text-sm"
             onClick={() => setAddVisible(true)}
           />
         </div>
         <DataTable
           value={filteredCustomers}
-          tableStyle={{ minWidth: "50rem" }}
-          className="centered-table"
+          tableStyle={{ minWidth: "50rem", maxWidth: "80%" }}
+          className="centered-table md:min-h-[60vh] min-h-[30vh]"
+          size="small"
+          tableClassName="md:min-h-[60vh] min-h-[30vh] "
+          cellClassName={(data) => {
+            return "max-h-[10vh] h-[10vh] overflow-hidden";
+          }}
           paginator
           rows={5}
           rowsPerPageOptions={[5, 10, 15]}
+          scrollable
+          scrollHeight="flex"
         >
           {columns.map((col, i) => {
             if (col.field === "actions") {
@@ -270,7 +285,7 @@ export default function CustomerTable({
                 <Column
                   key={col.field}
                   style={{
-                    display: "flex",
+                    height: "100%",
                     justifyContent: "center",
                     textAlign: "center",
                   }}
