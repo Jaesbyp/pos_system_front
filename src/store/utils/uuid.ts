@@ -1,4 +1,4 @@
-import { IInvoicePDF, IInvoiceResponse } from "../types/IInvoices";
+import { IInvoicePDF, IInvoiceResponse } from "../interfaces/IInvoices";
 
 // generate a uuid
 export const uuid = () => {
@@ -16,7 +16,7 @@ export function round(num: number) {
 
 export function invoiceResToPDF(invoice: IInvoiceResponse): IInvoicePDF | null {
   const calcTax = (totalWithoutTax: number, total: number) => {
-    return (total - totalWithoutTax)*100/totalWithoutTax;
+    return ((total - totalWithoutTax) * 100) / totalWithoutTax;
   };
 
   if (invoice) {
@@ -36,14 +36,12 @@ export function invoiceResToPDF(invoice: IInvoiceResponse): IInvoicePDF | null {
           };
         }) || [],
       tax_title: "Taxes",
-      header: 'Factura',
+      header: "Factura",
       fields: {
-      
         tax: `%`,
         discounts: String(invoice.totalDiscount),
       },
 
-      
       tax: calcTax(invoice.totalWithoutTax, invoice.total),
       notes: "Gracias por preferirnos, te quiero mucho",
       terms: "No hay devoluciones",
@@ -53,5 +51,3 @@ export function invoiceResToPDF(invoice: IInvoiceResponse): IInvoicePDF | null {
 
   return null;
 }
-
-

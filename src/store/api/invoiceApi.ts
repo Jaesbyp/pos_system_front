@@ -3,7 +3,7 @@ import {
   IInvoiceCreate,
   IInvoicePDF,
   IInvoiceResponse,
-} from "../types/IInvoices";
+} from "../interfaces/IInvoices";
 import { NextApiRequest, NextApiResponse } from "next";
 import fs from "fs";
 

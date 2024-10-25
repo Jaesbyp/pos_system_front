@@ -1,5 +1,5 @@
 import config from "../../../config/serverConfig";
-import { IBoxResponse } from "../types/IBoxes";
+import { IBoxResponse } from "../interfaces/IBoxes";
 
 export const handleGetBox = async (boxId: number) => {
   try {

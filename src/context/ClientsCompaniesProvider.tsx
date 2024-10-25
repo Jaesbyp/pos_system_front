@@ -4,7 +4,7 @@ import { fetchAllClients, fetchAllCompanies } from "@/store/api/userApi";
 import {
   TClientsResponse,
   TEnterpriseResponse,
-} from "@/store/types/IUserResponses";
+} from "@/store/interfaces/IUserResponses";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IClientsCompaniesContext {

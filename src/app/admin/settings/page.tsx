@@ -4,8 +4,8 @@ import {
   handleGetStore,
   handleUpdateStore,
 } from "@/store/api/storeApi";
-import { IInputsForm } from "@/store/types/IForms";
-import { IStoreResponse, IStoreUpdate } from "@/store/types/IStore";
+import { IInputsForm } from "@/store/interfaces/IForms";
+import { IStoreResponse, IStoreUpdate } from "@/store/interfaces/IStore";
 import { InputText } from "primereact/inputtext";
 import { KeyFilterType } from "primereact/keyfilter";
 import { Toast } from "primereact/toast";
@@ -202,9 +202,8 @@ export default function page() {
                               return validateRuc(value);
                             }
                             return true;
-                          }
-                        }
-                        )}
+                          },
+                        })}
                       />
                       {errors[store.name] && (
                         <small className="text-red-500">

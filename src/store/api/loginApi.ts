@@ -1,5 +1,5 @@
 import config from "../../../config/serverConfig";
-import IUserResponse from "../types/IUserResponses";
+import IUserResponse from "../interfaces/IUserResponses";
 
 export const fetchLogin = async (username: string, password: string) => {
   try {

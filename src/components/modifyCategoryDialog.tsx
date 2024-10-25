@@ -1,7 +1,7 @@
 import { handleUpdateCategory } from "@/store/api/categoryApi";
 import { handleUpdateIvaByCategory } from "@/store/api/productApi";
-import { ICategoryResponse } from "@/store/types/ICategory";
-import { IInputsForm } from "@/store/types/IForms";
+import { ICategoryResponse } from "@/store/interfaces/ICategory";
+import { IInputsForm } from "@/store/interfaces/IForms";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";

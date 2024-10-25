@@ -1,5 +1,9 @@
 import config from "../../../config/serverConfig";
-import { IProductCreate, IProductResponse, IProductUpdate } from "../types/IProducts";
+import {
+  IProductCreate,
+  IProductResponse,
+  IProductUpdate,
+} from "../interfaces/IProducts";
 
 export const handleGetProduct = async (productId: number) => {
   try {

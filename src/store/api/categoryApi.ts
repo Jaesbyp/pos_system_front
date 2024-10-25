@@ -1,4 +1,4 @@
-import { ICategoryResponse, ICategoryUpdate } from "../types/ICategory";
+import { ICategoryResponse, ICategoryUpdate } from "../interfaces/ICategory";
 import config from "../../../config/serverConfig";
 
 export const handleGetAllCategories = async () => {

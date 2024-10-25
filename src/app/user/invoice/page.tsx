@@ -4,24 +4,24 @@ import { useState, useEffect, useRef } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { handleGetAllProducts } from "@/store/api/productApi";
-import { IProductResponse } from "@/store/types/IProducts";
+import { IProductResponse } from "@/store/interfaces/IProducts";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { Toast } from "primereact/toast";
-import { IVAS } from "@/store/types/Tables";
+import { IVAS } from "@/store/interfaces/Tables";
 import { Controller, useForm } from "react-hook-form";
 import { Avatar } from "primereact/avatar";
 import { Dropdown } from "primereact/dropdown";
-import { ICustomerResponse } from "@/store/types/ICustomer";
+import { ICustomerResponse } from "@/store/interfaces/ICustomer";
 import { handleGetAllCustomers } from "@/store/api/customerApi";
 import CustomerTable from "@/components/customerTable";
 import { InputNumber } from "primereact/inputnumber";
 import { useRouter } from "next/navigation";
-import { IStoreLocal } from "@/store/types/IStore";
+import { IStoreLocal } from "@/store/interfaces/IStore";
 import { round } from "@/store/utils/uuid";
-import { IInvoiceCreate } from "@/store/types/IInvoices";
-import { ISellingProductsEntrance } from "@/store/types/ISellingProducts";
+import { IInvoiceCreate } from "@/store/interfaces/IInvoices";
+import { ISellingProductsEntrance } from "@/store/interfaces/ISellingProducts";
 import {
   handleCreateInvoice,
   handleUpdateInvoiceValues,

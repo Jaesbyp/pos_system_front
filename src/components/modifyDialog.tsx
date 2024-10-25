@@ -1,6 +1,6 @@
-import { IInputsForm } from "@/store/types/IForms";
-import { IProductResponse, IProductUpdate } from "@/store/types/IProducts";
-import { ICE, IRBPNR, IVAS } from "@/store/types/Tables";
+import { IInputsForm } from "@/store/interfaces/IForms";
+import { IProductResponse, IProductUpdate } from "@/store/interfaces/IProducts";
+import { ICE, IRBPNR, IVAS } from "@/store/interfaces/Tables";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";

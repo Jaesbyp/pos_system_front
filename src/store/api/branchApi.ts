@@ -1,5 +1,5 @@
 import config from "../../../config/serverConfig";
-import { IBranchResponse, IBranchUpdate } from "../types/IBranch";
+import { IBranchResponse, IBranchUpdate } from "../interfaces/IBranch";
 
 export const handleGetBranch = async (branchId: number) => {
   try {

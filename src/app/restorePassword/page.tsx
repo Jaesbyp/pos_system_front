@@ -9,7 +9,7 @@ import {
   fetchResetPassword,
   fetchResetRequestPassword,
 } from "@/store/api/userApi";
-import { IResetPasswordData } from "@/store/types/IUserResponses";
+import { IResetPasswordData } from "@/store/interfaces/IUserResponses";
 import { toast } from "react-hot-toast";
 
 export default function page() {

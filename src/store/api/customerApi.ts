@@ -1,5 +1,5 @@
 import config from "../../../config/serverConfig";
-import { ICustomerResponse, ICustomerUpdate } from "../types/ICustomer";
+import { ICustomerResponse, ICustomerUpdate } from "../interfaces/ICustomer";
 
 export const handleGetCustomer = async (customerId: number) => {
   try {

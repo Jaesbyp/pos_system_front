@@ -2,7 +2,7 @@
 import React, { use, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { UserRoles } from "@/store/types/IUserResponses";
+import { UserRoles } from "@/store/interfaces/IUserResponses";
 import { Card } from "primereact/card";
 
 function HomePageAdmin() {

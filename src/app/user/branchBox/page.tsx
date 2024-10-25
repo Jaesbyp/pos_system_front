@@ -3,9 +3,9 @@
 import { handleGetBoxesByBranchId } from "@/store/api/boxApi";
 import { handleGetAllBranches } from "@/store/api/branchApi";
 import { handleGetStore } from "@/store/api/storeApi";
-import { IBoxResponse } from "@/store/types/IBoxes";
-import { IBranchResponse } from "@/store/types/IBranch";
-import { IStoreLocal } from "@/store/types/IStore";
+import { IBoxResponse } from "@/store/interfaces/IBoxes";
+import { IBranchResponse } from "@/store/interfaces/IBranch";
+import { IStoreLocal } from "@/store/interfaces/IStore";
 import { useEffect, useState } from "react";
 
 const BranchBox = () => {
@@ -125,7 +125,6 @@ const BranchBox = () => {
             >
               Seleccionar otra caja
             </button>
-
           </div>
         </div>
       )}

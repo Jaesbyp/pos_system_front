@@ -3,8 +3,8 @@ import {
   handleDeleteBox,
   handleGetBoxesByBranchId,
 } from "@/store/api/boxApi";
-import { IBoxResponse } from "@/store/types/IBoxes";
-import { IBranchResponse } from "@/store/types/IBranch";
+import { IBoxResponse } from "@/store/interfaces/IBoxes";
+import { IBranchResponse } from "@/store/interfaces/IBranch";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
@@ -215,8 +215,6 @@ const BoxTableModal = ({
                 );
               }
             })}
-
-
           </DataTable>
         </div>
       </div>

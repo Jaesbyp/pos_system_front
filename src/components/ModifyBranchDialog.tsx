@@ -1,4 +1,4 @@
-import { IInputsForm } from "@/store/types/IForms";
+import { IInputsForm } from "@/store/interfaces/IForms";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
@@ -7,7 +7,7 @@ import { Toast } from "primereact/toast";
 import React, { RefObject } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { handleUpdateBranch } from "@/store/api/branchApi";
-import { IBranchResponse, IBranchUpdate } from "@/store/types/IBranch";
+import { IBranchResponse, IBranchUpdate } from "@/store/interfaces/IBranch";
 
 interface Props {
   toast: RefObject<Toast>;
@@ -41,7 +41,7 @@ export default function ModifyBranchDialog({
         placeholder: "Nombre de la Sucursal",
         alertText: "*El nombre es obligatorio",
         value: branch?.name,
-        onChange: () => { },
+        onChange: () => {},
         type: "InputText",
       },
       {
@@ -51,7 +51,7 @@ export default function ModifyBranchDialog({
         placeholder: "Código Principal",
         alertText: "*El código principal es obligatorio",
         value: branch?.address,
-        onChange: () => { },
+        onChange: () => {},
         type: "InputText",
       },
     ];

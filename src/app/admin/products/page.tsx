@@ -7,20 +7,20 @@ import {
   handleDeleteProduct,
   handleGetAllProducts,
 } from "@/store/api/productApi";
-import { IProductCreate, IProductResponse } from "@/store/types/IProducts";
+import { IProductCreate, IProductResponse } from "@/store/interfaces/IProducts";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { Toast } from "primereact/toast";
-import { IInputsForm } from "@/store/types/IForms";
+import { IInputsForm } from "@/store/interfaces/IForms";
 import { KeyFilterType } from "primereact/keyfilter";
-import { ICE, IRBPNR, IVAS } from "@/store/types/Tables";
+import { ICE, IRBPNR, IVAS } from "@/store/interfaces/Tables";
 import ModifyDialog from "@/components/modifyDialog";
 import ComboBox from "@/components/ComboBox";
 import { useForm } from "react-hook-form";
 import { FileUpload } from "primereact/fileupload";
-import { ICategoryResponse } from "@/store/types/ICategory";
+import { ICategoryResponse } from "@/store/interfaces/ICategory";
 import { handleGetAllCategories } from "@/store/api/categoryApi";
 
 export default function DynamicColumnsDemo() {
@@ -147,7 +147,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: /^[A-Za-z ]$/,
       placeholder: "Nombre del Producto",
       alertText: "*El nombre es obligatorio",
-      onChange: () => { },
+      onChange: () => {},
       maxLength: 20,
     },
     {
@@ -156,7 +156,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: "num",
       placeholder: "Código Principal",
       alertText: "*El código principal es obligatorio",
-      onChange: () => { },
+      onChange: () => {},
       maxLength: 4,
     },
     {
@@ -165,7 +165,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: "num",
       placeholder: "Código Auxiliar",
       alertText: "*El código auxiliar es obligatorio",
-      onChange: () => { },
+      onChange: () => {},
       maxLength: 4,
     },
     {
@@ -174,7 +174,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: /^[A-Za-z ]$/,
       placeholder: "Descripción",
       alertText: "*La descripción es obligatoria",
-      onChange: () => { },
+      onChange: () => {},
       maxLength: 50,
     },
     {
@@ -183,7 +183,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: "num",
       placeholder: "Stock",
       alertText: "*El stock es obligatorio",
-      onChange: () => { },
+      onChange: () => {},
     },
     {
       name: "unitPriceRegister",
@@ -191,7 +191,7 @@ export default function DynamicColumnsDemo() {
       keyfilter: "money",
       placeholder: "Precio Unitario",
       alertText: "*El precio unitario es obligatorio",
-      onChange: () => { },
+      onChange: () => {},
     },
   ];
 

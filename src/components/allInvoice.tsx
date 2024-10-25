@@ -10,7 +10,7 @@ import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { IInvoiceResponse } from "@/store/types/IInvoices";
+import { IInvoiceResponse } from "@/store/interfaces/IInvoices";
 import InvoiceInfo from "@/components/invoiceInfo";
 import { useRouter } from "next/navigation";
 import { invoiceResToPDF } from "@/store/utils/uuid";

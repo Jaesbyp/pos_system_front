@@ -1,5 +1,8 @@
-import { ICustomerResponse, ICustomerUpdate } from "@/store/types/ICustomer";
-import { IInputsForm } from "@/store/types/IForms";
+import {
+  ICustomerResponse,
+  ICustomerUpdate,
+} from "@/store/interfaces/ICustomer";
+import { IInputsForm } from "@/store/interfaces/IForms";
 import { InputText } from "primereact/inputtext";
 import { KeyFilterType } from "primereact/keyfilter";
 import React, { RefObject } from "react";
@@ -8,7 +11,7 @@ import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import ComboBox from "./ComboBox";
-import { IDENTIFICATION_TYPES } from "@/store/types/Tables";
+import { IDENTIFICATION_TYPES } from "@/store/interfaces/Tables";
 import { handleUpdateCustomer } from "@/store/api/customerApi";
 import validateDni, { validateRuc } from "@/store/utils/dniRucValidator";
 

@@ -2,7 +2,7 @@ import config from "../../../config/serverConfig";
 import {
   ISellingProductsEntrance,
   ISellingProductsResponse,
-} from "../types/ISellingProducts";
+} from "../interfaces/ISellingProducts";
 
 export const handleGetSellingProduct = async (sellingProductId: number) => {
   try {

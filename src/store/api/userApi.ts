@@ -2,7 +2,7 @@ import config from "../../../config/serverConfig";
 import IUserResponse, {
   IUserRegister,
   IUserUpdate,
-} from "../types/IUserResponses";
+} from "../interfaces/IUserResponses";
 
 export const handleGetUser = async (userId: number) => {
   try {

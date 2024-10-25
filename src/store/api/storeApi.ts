@@ -1,5 +1,5 @@
 import config from "../../../config/serverConfig";
-import { IStoreResponse, IStoreUpdate } from "../types/IStore";
+import { IStoreResponse, IStoreUpdate } from "../interfaces/IStore";
 
 export const handleGetStore = async () => {
   try {

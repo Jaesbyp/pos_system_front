@@ -29,7 +29,7 @@ import {
   UseDeviceScreenType,
 } from "@/hooks/use-resize-listener";
 
-export default function CustomerTable({
+export default function ProvidersTable({
   setCustomersContext,
 }: {
   setCustomersContext?: any;

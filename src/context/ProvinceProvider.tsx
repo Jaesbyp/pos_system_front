@@ -1,7 +1,7 @@
 "use client";
 
 import fetchGetProvinces from "@/store/api/cityApi";
-import { IProvinceResponse } from "@/store/types/ICitiesResponses";
+import { IProvinceResponse } from "@/store/interfaces/ICitiesResponses";
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface IProvinceContext {

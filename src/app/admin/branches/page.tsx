@@ -7,10 +7,10 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
 import { Toast } from "primereact/toast";
-import { IInputsForm } from "@/store/types/IForms";
+import { IInputsForm } from "@/store/interfaces/IForms";
 import { useForm } from "react-hook-form";
 import { KeyFilterType } from "primereact/keyfilter";
-import { IBranchCreate, IBranchResponse } from "@/store/types/IBranch";
+import { IBranchCreate, IBranchResponse } from "@/store/interfaces/IBranch";
 import {
   handleCreateBranch,
   handleDeleteBranch,
@@ -140,7 +140,7 @@ const branchs = () => {
       placeholder: "Nombre de la sucursal",
       alertText: "*El nombre es obligatorio",
       maxLength: 50,
-      onChange: () => { },
+      onChange: () => {},
     },
     {
       name: "address",
@@ -149,7 +149,7 @@ const branchs = () => {
       placeholder: "Dirección de la sucursal",
       alertText: "*La dirección es obligatoria",
       maxLength: 100,
-      onChange: () => { },
+      onChange: () => {},
     },
   ];
 
@@ -258,7 +258,6 @@ const branchs = () => {
         </div>
       </div>
 
-
       {branch !== undefined && branch !== null && (
         <ModifyBranchDialog
           toast={toast}
@@ -324,7 +323,6 @@ const branchs = () => {
           </div>
         </form>
       </Dialog>
-
 
       {<BoxTableModal branchBox={branchBox} toast={toast} />}
     </div>
