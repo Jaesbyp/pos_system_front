@@ -1,14 +1,5 @@
 "use client";
 import ComboBox from "@/components/ComboBox";
-import {
-  handleCreateCustomer,
-  handleDeleteCustomer,
-  handleGetAllCustomers,
-} from "@/store/api/customerApi";
-import {
-  ICustomerResponse,
-  ICustomerUpdate,
-} from "@/store/interfaces/ICustomer";
 import { IInputsForm } from "@/store/interfaces/IForms";
 import { IDENTIFICATION_TYPES } from "@/store/interfaces/Tables";
 import { Button } from "primereact/button";
@@ -28,15 +19,32 @@ import {
   DEVICE_TYPE_ENUM,
   UseDeviceScreenType,
 } from "@/hooks/use-resize-listener";
+import {
+  IProviderCreate,
+  IProviderResponse,
+  IProviderUpdate,
+} from "@/store/interfaces/IProvider";
+import { useProviders } from "@/hooks/provider/useProvider";
+import { useDebounce } from "primereact/hooks";
 
 export default function ProvidersTable({
-  setCustomersContext,
+  setProvidersContext,
 }: {
-  setCustomersContext?: any;
+  setProvidersContext?: any;
 }) {
-  const [customers, setCustomers] = useState<ICustomerResponse[]>([]);
-  const [customer, setCustomer] = useState<ICustomerResponse>();
-  const [searchTerm, setSearchTerm] = useState("");
+  const {
+    providers,
+    loadProviders,
+    loading,
+    createProvider,
+    updateProvider,
+    deleteProvider,
+  } = useProviders();
+  const [provider, setProvider] = useState<IProviderResponse>();
+  const [searchTermInput, debounceSearchTerm, setSearchTermInput] = useDebounce(
+    "",
+    300
+  );
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const toast = useRef<Toast>(null);
@@ -61,72 +69,65 @@ export default function ProvidersTable({
     { field: "actions", header: "Acciones" },
   ];
 
-  useEffect(() => {
-    handleGetAllCustomers().then((res) => {
-      if (res) {
-        setCustomers(res);
-      }
-    });
-  }, []);
-
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    setSearchTermInput(e.target.value);
   };
 
-  const filteredCustomers = customers.filter((customer) => {
-    return Object.values(customer).some((value) => {
-      return String(value).toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredProviders = providers?.filter((provider) => {
+    return Object.values(provider).some((value) => {
+      return String(value)
+        .toLowerCase()
+        .includes(debounceSearchTerm.toLowerCase());
     });
   });
 
-  const handleModify = (customer: ICustomerResponse) => {
-    setCustomer(customer);
+  const handleModify = (provider: IProviderResponse) => {
+    setProvider(provider);
     setEditVisible(true);
   };
 
   const confirm = (
     event: React.MouseEvent<HTMLButtonElement>,
-    customer: ICustomerResponse
+    provider: IProviderResponse
   ) => {
     confirmPopup({
       target: event.currentTarget,
-      message: "¿Está seguro que desea eliminar este usuario?",
+      message: "¿Está seguro que desea eliminar este proveedor?",
       icon: "pi pi-exclamation-triangle",
       acceptClassName: "p-button-danger",
       accept() {
-        accept(customer);
+        accept(provider);
       },
       reject,
     });
   };
 
-  const accept = (customer: ICustomerResponse) => {
+  const accept = (provider: IProviderResponse) => {
     toast.current?.show({
       severity: "info",
       summary: "SConfirmed",
       detail: "You have accepted",
       life: 3000,
     });
-    handleDelete(customer);
+    handleDelete(provider);
   };
 
-  const handleDelete = (customer: ICustomerResponse) => {
-    handleDeleteCustomer(customer.id).then((res) => {
+  const handleDelete = (provider: IProviderResponse) => {
+    deleteProvider(provider.id).then((res) => {
       if (res) {
         toast.current?.show({
           severity: "success",
-          summary: "Cliente eliminado",
-          detail: `El cliente ${customer.name} ha sido eliminado con éxito`,
+          summary: "Proveedor eliminado",
+          detail: `El proveedor ${provider.name} ha sido eliminado con éxito`,
           life: 3000,
         });
-        setCustomers(customers.filter((c) => c.id !== customer.id));
-        if (setCustomersContext)
-          setCustomersContext(customers.filter((c) => c.id !== customer.id));
+        if (setProvidersContext)
+          setProvidersContext(providers.filter((c) => c.id !== provider.id));
       } else {
         toast.current?.show({
           severity: "error",
           summary: "Error",
-          detail: `El cliente no ha sido eliminado`,
+          detail: `El proveedor no ha sido eliminado`,
           life: 3000,
         });
       }
@@ -147,17 +148,8 @@ export default function ProvidersTable({
       name: "name",
       label: "Nombre",
       keyfilter: /^[A-Za-z ]$/,
-      placeholder: "Ingrese su nombre",
+      placeholder: "Ingrese el nombre",
       alertText: "El nombre es requerido",
-      onChange: () => {},
-      maxLength: 20,
-    },
-    {
-      name: "lastName",
-      label: "Apellido",
-      keyfilter: /^[A-Za-z ]$/,
-      placeholder: "Ingrese su apellido",
-      alertText: "El apellido es requerido",
       onChange: () => {},
       maxLength: 20,
     },
@@ -165,32 +157,32 @@ export default function ProvidersTable({
       name: "email",
       label: "Correo",
       keyfilter: "email",
-      placeholder: "Ingrese su correo",
+      placeholder: "Ingrese el email",
       alertText: "El correo es inválido",
       onChange: () => {},
-    },
-    {
-      name: "businessName",
-      label: "Razón Social",
-      keyfilter: /^[A-Za-z ]$/,
-      placeholder: "Ingrese su razón social",
-      alertText: "La razón social es requerida",
-      onChange: () => {},
-      maxLength: 30,
     },
     {
       name: "address",
       label: "Dirección",
       keyfilter: /^[A-Za-z ]$/,
-      placeholder: "Ingrese su dirección",
+      placeholder: "Ingrese el dirección",
       alertText: "La dirección es requerida",
       onChange: () => {},
+    },
+    {
+      name: "phoneNumber",
+      label: "Número de teléfono",
+      keyfilter: "alphanum",
+      placeholder: "Ingrese el número de teléfono",
+      alertText: "El número de teléfono es inválido",
+      onChange: () => {},
+      maxLength: 30,
     },
     {
       name: "identification",
       label: "Identificación",
       keyfilter: "alphanum",
-      placeholder: "Ingrese su identificación",
+      placeholder: "Ingrese la identificación",
       alertText: "La identificación es inválida",
       onChange: () => {},
     },
@@ -201,32 +193,32 @@ export default function ProvidersTable({
   };
 
   const handleRegister = handleSubmit((data: any) => {
-    const newCustomer: ICustomerUpdate = {
+    console.log(data, typeof data);
+    const newProvider: IProviderCreate = {
       name: data.name,
-      lastName: data.lastName,
       email: data.email,
-      businessName: data.businessName,
       identification: data.identification,
       address: data.address,
-      identificationType: idType,
+      phoneNumber: data.phoneNumber,
+      identificationTypeCode: idType,
+      storeId: 1,
     };
 
-    handleCreateCustomer(newCustomer).then((res) => {
+    createProvider(newProvider).then((res) => {
       if (res) {
-        setCustomers([...customers, res]);
-        if (setCustomersContext) setCustomersContext([...customers, res]);
+        if (setProvidersContext) setProvidersContext([...providers, res]);
         setAddVisible(false);
         toast.current?.show({
           severity: "success",
-          summary: "CLiente creado",
-          detail: `El cliente ${res.name} ha sido creado con éxito`,
+          summary: "Proveedor creado",
+          detail: `El proveedor ${res.name} ha sido creado con éxito`,
           life: 3000,
         });
       } else {
         toast.current?.show({
           severity: "error",
           summary: "Error",
-          detail: `El cliente no ha sido creado`,
+          detail: `El proveedor no ha sido creado`,
           life: 3000,
         });
       }
@@ -243,7 +235,7 @@ export default function ProvidersTable({
           <span>
             <i className="pi pi-search" style={{ fontSize: "1.5rem" }}></i>
           </span>{" "}
-          Listado de Clientes
+          Listado de Proveedores
         </h1>
         <div className="flex gap-4 justify-center">
           <span className="p-input-icon-left">
@@ -251,14 +243,14 @@ export default function ProvidersTable({
             <InputText
               type="search"
               placeholder="Buscar"
-              value={searchTerm}
+              value={searchTermInput}
               onChange={handleSearch}
               className="md:w-auto lg:w-[45rem] w-52 md:h-full h-11"
             />
           </span>
           <Button
             label={
-              deviceType === DEVICE_TYPE_ENUM.MOBILE ? "" : "Agregar cliente"
+              deviceType === DEVICE_TYPE_ENUM.MOBILE ? "" : "Agregar proveedor"
             }
             severity="info"
             raised
@@ -268,9 +260,10 @@ export default function ProvidersTable({
           />
         </div>
         <DataTable
-          value={filteredCustomers}
-          tableStyle={{ minWidth: "50rem", maxWidth: "80%" }}
+          value={filteredProviders}
+          tableStyle={{ minWidth: "50rem" }}
           className="centered-table md:min-h-[60vh] min-h-[30vh] "
+          loading={loading}
           size="small"
           tableClassName="md:min-h-[60vh] min-h-[30vh] "
           cellClassName={(data) => {
@@ -329,17 +322,17 @@ export default function ProvidersTable({
           })}
         </DataTable>
 
-        {customer !== undefined && (
+        {/* {provider !== undefined && (
           <ModifyClientDialog
             toast={toast}
-            customer={customer}
+            customer={provider}
             onHide={() => setEditVisible(false)}
             visible={editVisible}
             setEditVisible={setEditVisible}
             setCustomers={setCustomers}
-            setCustomersContext={setCustomersContext}
+            setCustomersContext={setProvidersContext}
           />
-        )}
+        )} */}
 
         <Dialog
           visible={addVisible}
@@ -351,7 +344,7 @@ export default function ProvidersTable({
         >
           <form className="px-16">
             <h1 className="text-center font-bold text-3xl">
-              Agregar un cliente
+              Agregar un proveedor
             </h1>
             {allForms.map((form, i) => (
               <div className="py-3 block mt-3" key={i}>

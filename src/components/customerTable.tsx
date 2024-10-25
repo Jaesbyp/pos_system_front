@@ -269,7 +269,7 @@ export default function CustomerTable({
         </div>
         <DataTable
           value={filteredCustomers}
-          tableStyle={{ minWidth: "50rem", maxWidth: "80%" }}
+          tableStyle={{ minWidth: "50rem" }}
           className="centered-table md:min-h-[60vh] min-h-[30vh] "
           size="small"
           tableClassName="md:min-h-[60vh] min-h-[30vh] "

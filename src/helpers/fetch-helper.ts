@@ -5,7 +5,7 @@ export const fetchHelper = async (url: string, method: string, body: any) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: method !== "GET" ? JSON.stringify(body) : undefined,
     });
 
     if (!response.ok) {
