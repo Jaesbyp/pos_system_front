@@ -26,6 +26,7 @@ import {
 } from "@/store/interfaces/IProvider";
 import { useProviders } from "@/hooks/provider/useProvider";
 import { useDebounce } from "primereact/hooks";
+import ModifyProviderDialog from "./modify-provider-dialog";
 
 export default function ProvidersTable({
   setProvidersContext,
@@ -60,12 +61,10 @@ export default function ProvidersTable({
   const columns = [
     { field: "id", header: "ID" },
     { field: "name", header: "Nombre" },
-    { field: "lastName", header: "Apellido" },
     { field: "email", header: "Correo" },
-    { field: "businessName", header: "Razón Social" },
     { field: "identification", header: "Identificación" },
     { field: "address", header: "Dirección" },
-    { field: "identificationType", header: "Tipo de identificación" },
+    { field: "phoneNumber", header: "Número de teléfono" },
     { field: "actions", header: "Acciones" },
   ];
 
@@ -172,7 +171,7 @@ export default function ProvidersTable({
     {
       name: "phoneNumber",
       label: "Número de teléfono",
-      keyfilter: "alphanum",
+      keyfilter: "pnum",
       placeholder: "Ingrese el número de teléfono",
       alertText: "El número de teléfono es inválido",
       onChange: () => {},
@@ -181,7 +180,7 @@ export default function ProvidersTable({
     {
       name: "identification",
       label: "Identificación",
-      keyfilter: "alphanum",
+      keyfilter: "pnum",
       placeholder: "Ingrese la identificación",
       alertText: "La identificación es inválida",
       onChange: () => {},
@@ -297,12 +296,12 @@ export default function ProvidersTable({
                       />
                       <Toast ref={toast} />
                       <ConfirmPopup />
-                      <Button
+                      {/* <Button
                         icon="pi pi-eraser"
                         severity="danger"
                         aria-label="Cancel"
                         onClick={(e) => confirm(e, rowData)}
-                      />
+                      /> */}
                     </div>
                   )}
                 />
@@ -322,17 +321,17 @@ export default function ProvidersTable({
           })}
         </DataTable>
 
-        {/* {provider !== undefined && (
-          <ModifyClientDialog
+        {provider !== undefined && (
+          <ModifyProviderDialog
             toast={toast}
-            customer={provider}
+            provider={provider}
             onHide={() => setEditVisible(false)}
             visible={editVisible}
             setEditVisible={setEditVisible}
-            setCustomers={setCustomers}
-            setCustomersContext={setProvidersContext}
+            setProvidersContext={setProvidersContext}
+            updateMethod={updateProvider}
           />
-        )} */}
+        )}
 
         <Dialog
           visible={addVisible}
