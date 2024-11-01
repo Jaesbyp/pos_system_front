@@ -5,6 +5,7 @@ import {
   fetchHelperPut,
 } from "@/helpers/fetch-helper";
 import config from "../../../../config/serverConfig";
+import { IPucharseDetail } from "@/store/interfaces/pucharses/IPucharseDetail";
 
 const PUCHARSE_DETAIL_API = `${config.API_REST_BASE_URL}/pucharse-details`;
 
@@ -14,6 +15,12 @@ export const handleGetPucharseDetail = async (pucharseDetailId: number) => {
 
 export const handleGetAllPucharseDetails = async () => {
   return fetchHelperGet(PUCHARSE_DETAIL_API);
+};
+
+export const handleGetAllPucharseDetailsByPucharse = async (
+  pucharseId: number
+) => {
+  return fetchHelperGet(`${PUCHARSE_DETAIL_API}/pucharse/${pucharseId}`);
 };
 
 export const handleCreatePucharseDetail = async (pucharseDetailCreate: any) => {

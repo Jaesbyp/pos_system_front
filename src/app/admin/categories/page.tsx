@@ -20,10 +20,12 @@ import {
   ICategoryResponse,
   ICategoryUpdate,
 } from "@/store/interfaces/ICategory";
+import PageContainer from "@/components/pages/page-container";
 
 export default function page() {
   const toast = useRef<Toast>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<ICategoryResponse[]>([]);
   const [addVisible, setAddVisible] = useState(false);
   const [editVisible, setModifyVisible] = useState(false);
@@ -37,9 +39,11 @@ export default function page() {
   } = useForm();
 
   useEffect(() => {
+    setLoading(true);
     handleGetAllCategories().then((res) => {
       if (res) {
         setCategories(res);
+        setLoading(false);
       }
     });
   }, []);
@@ -157,7 +161,7 @@ export default function page() {
   });
 
   return (
-    <div className="border p-4 border-opacity-5 bg-gray-700 w-full mx-16">
+    <PageContainer>
       <Toast ref={toast} />
       <div className="flex flex-col gap-6">
         <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
@@ -188,29 +192,35 @@ export default function page() {
         </div>
         <DataTable
           value={filteredCategories}
-          tableStyle={{ minWidth: "50rem" }}
-          className="centered-table"
+          tableStyle={{ minWidth: "30rem", maxHeight: "30rem" }}
+          className="centered-table md:min-h-[60vh] min-h-[30vh] max-h-[70vh] "
+          size="small"
+          tableClassName="md:min-h-[60vh] min-h-[30vh]  "
+          cellClassName={() => {
+            return "max-h-[10vh]  overflow-hidden";
+          }}
           paginator
+          loading={loading}
           rows={5}
           rowsPerPageOptions={[5, 10, 15]}
+          scrollable
+          scrollHeight="flex"
         >
           {columns.map((col, i) => {
             if (col.field === "actions") {
               return (
                 <Column
                   key={col.field}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    textAlign: "center",
-                  }}
+                  align={"center"}
                   header={col.header}
                   headerStyle={{ textAlign: "center" }}
+                  bodyStyle={{ textAlign: "center" }}
                   body={(rowData) => (
-                    <div className="action-buttons flex gap-6">
+                    <div className="justify-center action-buttons flex gap-6">
                       <Button
                         icon="pi pi-pencil"
                         severity="info"
+                        tooltip="Modificar"
                         aria-label="User"
                         onClick={() => handleModify(rowData)}
                       />
@@ -218,6 +228,7 @@ export default function page() {
                       <Button
                         icon="pi pi-eraser"
                         severity="danger"
+                        tooltip="Eliminar"
                         aria-label="Cancel"
                         onClick={(e) => confirm(e, rowData)}
                       />
@@ -308,6 +319,6 @@ export default function page() {
           </div>
         </Dialog>
       </div>
-    </div>
+    </PageContainer>
   );
 }

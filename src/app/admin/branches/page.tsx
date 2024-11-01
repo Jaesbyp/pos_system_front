@@ -18,6 +18,7 @@ import {
 } from "@/store/api/branchApi";
 import ModifyBranchDialog from "@/components/ModifyBranchDialog";
 import BoxTableModal from "@/components/BoxTableModal";
+import PageContainer from "@/components/pages/page-container";
 
 const branchs = () => {
   const toast = useRef<Toast>(null);
@@ -167,165 +168,175 @@ const branchs = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6 mt-6">
-      <div className="border p-4 border-opacity-5 bg-gray-700 w-full ">
-        <div className="flex flex-col gap-6">
-          <Toast ref={toast} />
+    <PageContainer>
+      <div className="flex flex-col gap-6 mt-6 overflow-auto overflow-y-auto max-h-[90vh]">
+        <div className="border p-4 border-opacity-5 bg-gray-700 w-full ">
+          <div className="flex flex-col gap-6">
+            <Toast ref={toast} />
 
-          <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
-            <span>
-              <i className="pi pi-search" style={{ fontSize: "1.5rem" }}></i>
-            </span>{" "}
-            Listado de sucursales
-          </h1>
+            <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
+              <span>
+                <i className="pi pi-search" style={{ fontSize: "1.5rem" }}></i>
+              </span>{" "}
+              Listado de sucursales
+            </h1>
 
-          <div className="flex gap-4 justify-between">
-            <div className="p-input-icon-left">
-              <i className="pi pi-search"></i>
-              <InputText
-                placeholder="Buscar"
-                value={searchTerm}
-                onChange={handleSearch}
-                className="w-96"
+            <div className="flex gap-4 justify-between">
+              <div className="p-input-icon-left">
+                <i className="pi pi-search"></i>
+                <InputText
+                  placeholder="Buscar"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-96"
+                />
+              </div>
+              <Button
+                label="Agregar Sucursal"
+                severity="info"
+                raised
+                className="w-56"
+                icon="pi pi-plus"
+                onClick={() => {
+                  setAddVisible(true);
+                }}
               />
             </div>
-            <Button
-              label="Agregar Sucursal"
-              severity="info"
-              raised
-              className="w-56"
-              icon="pi pi-plus"
-              onClick={() => {
-                setAddVisible(true);
+            <DataTable
+              value={filteredBranchs}
+              tableStyle={{ minWidth: "20rem", maxHeight: "30rem" }}
+              className="centered-table md:min-h-[10vh] min-h-[10vh] max-h-[70vh] "
+              size="small"
+              tableClassName="md:min-h-[10vh] min-h-[10vh]  "
+              cellClassName={() => {
+                return "max-h-[10vh]  overflow-hidden";
               }}
-            />
+              paginator
+              rows={5}
+              rowsPerPageOptions={[5, 10, 15]}
+              scrollable
+              scrollHeight="flex"
+              onRowClick={(e) => {
+                setBranchBox(e.data as IBranchResponse);
+              }}
+            >
+              {columns.map((col, i) => {
+                if (col.field === "actions") {
+                  return (
+                    <Column
+                      key={col.field}
+                      style={{ display: "flex", justifyContent: "center" }}
+                      header={col.header}
+                      alignHeader={"center"}
+                      body={(rowData) => (
+                        <div className="action-buttons flex gap-6">
+                          <Button
+                            icon="pi pi-pencil"
+                            tooltip="Modificar"
+                            severity="info"
+                            aria-label="User"
+                            onClick={() => {
+                              handleModify(rowData);
+                            }}
+                          />
+                          <ConfirmPopup />
+                          <Button
+                            icon="pi pi-eraser"
+                            tooltip="Eliminar"
+                            severity="danger"
+                            aria-label="Cancel"
+                            onClick={(e) => confirm(e, rowData)}
+                          />
+                        </div>
+                      )}
+                    />
+                  );
+                } else {
+                  return (
+                    <Column
+                      key={col.field}
+                      field={col.field}
+                      header={col.header}
+                      alignHeader={"center"}
+                      body={(rowData) => rowData[col.field] || "-"}
+                      style={{ textAlign: "center" }}
+                    />
+                  );
+                }
+              })}
+            </DataTable>
           </div>
-          <DataTable
-            value={filteredBranchs}
-            tableStyle={{ minWidth: "50rem" }}
-            className="centered-table"
-            paginator
-            rows={5}
-            rowsPerPageOptions={[5, 10, 25, 50]}
-            rowHover={true}
-            onRowClick={(e) => {
-              setBranchBox(e.data as IBranchResponse);
-            }}
-          >
-            {columns.map((col, i) => {
-              if (col.field === "actions") {
-                return (
-                  <Column
-                    key={col.field}
-                    style={{ display: "flex", justifyContent: "center" }}
-                    header={col.header}
-                    alignHeader={"center"}
-                    body={(rowData) => (
-                      <div className="action-buttons flex gap-6">
-                        <Button
-                          icon="pi pi-pencil"
-                          severity="info"
-                          aria-label="User"
-                          onClick={() => {
-                            handleModify(rowData);
-                          }}
-                        />
-                        <ConfirmPopup />
-                        <Button
-                          icon="pi pi-eraser"
-                          severity="danger"
-                          aria-label="Cancel"
-                          onClick={(e) => confirm(e, rowData)}
-                        />
-                      </div>
-                    )}
-                  />
-                );
-              } else {
-                return (
-                  <Column
-                    key={col.field}
-                    field={col.field}
-                    header={col.header}
-                    alignHeader={"center"}
-                    body={(rowData) => rowData[col.field] || "-"}
-                    style={{ textAlign: "center" }}
-                  />
-                );
-              }
-            })}
-          </DataTable>
         </div>
-      </div>
 
-      {branch !== undefined && branch !== null && (
-        <ModifyBranchDialog
-          toast={toast}
-          branch={branch}
-          setBranches={setBranches}
-          visible={editVisible}
-          setEditVisible={setEditVisible}
-        />
-      )}
+        {branch !== undefined && branch !== null && (
+          <ModifyBranchDialog
+            toast={toast}
+            branch={branch}
+            setBranches={setBranches}
+            visible={editVisible}
+            setEditVisible={setEditVisible}
+          />
+        )}
 
-      <Dialog
-        visible={addVisible}
-        style={{ width: "50vw" }}
-        onHide={() => {
-          reset();
-          setAddVisible(false);
-        }}
-      >
-        <form className="px-16">
-          <h1 className="text-center font-bold text-3xl">
-            Agregar una sucursal
-          </h1>
-          {allForms.map((allForm, index) => (
-            <div className="py-4 block" key={index}>
-              <span className="p-float-label">
-                <InputText
-                  id={allForm.name}
-                  className="border border-solid border-gray-300 py-2 px-4 rounded-full w-full"
-                  keyfilter={allForm.keyfilter as KeyFilterType}
-                  placeholder={allForm.placeholder}
-                  maxLength={allForm.maxLength}
-                  {...register(allForm.name, {
-                    required: allForm.alertText,
-                  })}
-                />
-                <label className="block pb-2" htmlFor={allForm.name}>
-                  {allForm.label}
-                </label>
-              </span>
-              {errors[allForm.name] && (
-                <small className="text-red-500">{allForm.alertText}</small>
-              )}
+        <Dialog
+          visible={addVisible}
+          style={{ width: "50vw" }}
+          onHide={() => {
+            reset();
+            setAddVisible(false);
+          }}
+        >
+          <form className="px-16">
+            <h1 className="text-center font-bold text-3xl">
+              Agregar una sucursal
+            </h1>
+            {allForms.map((allForm, index) => (
+              <div className="py-4 block" key={index}>
+                <span className="p-float-label">
+                  <InputText
+                    id={allForm.name}
+                    className="border border-solid border-gray-300 py-2 px-4 rounded-full w-full"
+                    keyfilter={allForm.keyfilter as KeyFilterType}
+                    placeholder={allForm.placeholder}
+                    maxLength={allForm.maxLength}
+                    {...register(allForm.name, {
+                      required: allForm.alertText,
+                    })}
+                  />
+                  <label className="block pb-2" htmlFor={allForm.name}>
+                    {allForm.label}
+                  </label>
+                </span>
+                {errors[allForm.name] && (
+                  <small className="text-red-500">{allForm.alertText}</small>
+                )}
+              </div>
+            ))}
+            <div className="flex justify-evenly gap-4 py-4">
+              <Button
+                label="Agregar"
+                severity="info"
+                className="w-1/2"
+                type="submit"
+                onClick={handleRegister}
+              />
+              <Button
+                label="Cancelar"
+                severity="danger"
+                className="w-1/2"
+                type="button"
+                onClick={() => {
+                  reset();
+                  setAddVisible(false);
+                }}
+              />
             </div>
-          ))}
-          <div className="flex justify-evenly gap-4 py-4">
-            <Button
-              label="Agregar"
-              severity="info"
-              className="w-1/2"
-              type="submit"
-              onClick={handleRegister}
-            />
-            <Button
-              label="Cancelar"
-              severity="danger"
-              className="w-1/2"
-              type="button"
-              onClick={() => {
-                reset();
-                setAddVisible(false);
-              }}
-            />
-          </div>
-        </form>
-      </Dialog>
+          </form>
+        </Dialog>
 
-      {<BoxTableModal branchBox={branchBox} toast={toast} />}
-    </div>
+        {<BoxTableModal branchBox={branchBox} toast={toast} />}
+      </div>
+    </PageContainer>
   );
 };
 

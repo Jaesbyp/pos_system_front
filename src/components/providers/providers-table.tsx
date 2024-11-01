@@ -33,14 +33,7 @@ export default function ProvidersTable({
 }: {
   setProvidersContext?: any;
 }) {
-  const {
-    providers,
-    loadProviders,
-    loading,
-    createProvider,
-    updateProvider,
-    deleteProvider,
-  } = useProviders();
+  const { providers, loading, createProvider, updateProvider } = useProviders();
   const [provider, setProvider] = useState<IProviderResponse>();
   const [searchTermInput, debounceSearchTerm, setSearchTermInput] = useDebounce(
     "",
@@ -83,63 +76,6 @@ export default function ProvidersTable({
   const handleModify = (provider: IProviderResponse) => {
     setProvider(provider);
     setEditVisible(true);
-  };
-
-  const confirm = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    provider: IProviderResponse
-  ) => {
-    confirmPopup({
-      target: event.currentTarget,
-      message: "¿Está seguro que desea eliminar este proveedor?",
-      icon: "pi pi-exclamation-triangle",
-      acceptClassName: "p-button-danger",
-      accept() {
-        accept(provider);
-      },
-      reject,
-    });
-  };
-
-  const accept = (provider: IProviderResponse) => {
-    toast.current?.show({
-      severity: "info",
-      summary: "SConfirmed",
-      detail: "You have accepted",
-      life: 3000,
-    });
-    handleDelete(provider);
-  };
-
-  const handleDelete = (provider: IProviderResponse) => {
-    deleteProvider(provider.id).then((res) => {
-      if (res) {
-        toast.current?.show({
-          severity: "success",
-          summary: "Proveedor eliminado",
-          detail: `El proveedor ${provider.name} ha sido eliminado con éxito`,
-          life: 3000,
-        });
-        if (setProvidersContext)
-          setProvidersContext(providers.filter((c) => c.id !== provider.id));
-      } else {
-        toast.current?.show({
-          severity: "error",
-          summary: "Error",
-          detail: `El proveedor no ha sido eliminado`,
-          life: 3000,
-        });
-      }
-    });
-  };
-
-  const reject = () => {
-    toast.current?.show({
-      severity: "info",
-      summary: "Rejected",
-      detail: "Ha rechazado",
-      life: 3000,
-    });
   };
 
   const allForms: IInputsForm[] = [
@@ -265,8 +201,8 @@ export default function ProvidersTable({
           loading={loading}
           size="small"
           tableClassName="md:min-h-[60vh] min-h-[30vh] "
-          cellClassName={(data) => {
-            return "max-h-[10vh] h-[10vh] overflow-hidden";
+          cellClassName={() => {
+            return "max-h-[10vh] overflow-hidden";
           }}
           paginator
           rows={5}
@@ -274,13 +210,12 @@ export default function ProvidersTable({
           scrollable
           scrollHeight="flex"
         >
-          {columns.map((col, i) => {
+          {columns.map((col) => {
             if (col.field === "actions") {
               return (
                 <Column
                   key={col.field}
                   style={{
-                    height: "100%",
                     justifyContent: "center",
                     textAlign: "center",
                   }}
@@ -291,6 +226,7 @@ export default function ProvidersTable({
                       <Button
                         icon="pi pi-pencil"
                         severity="info"
+                        tooltip="Modificar"
                         aria-label="User"
                         onClick={() => handleModify(rowData)}
                       />

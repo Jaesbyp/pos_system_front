@@ -1,6 +1,6 @@
 import { IPucharseDetailCreate } from "./IPucharseDetail";
 
-export interface IPucharse {
+export interface IPucharseResponse {
   id: number;
   invoiceNumber: string;
   orderDate: Date;
@@ -8,6 +8,7 @@ export interface IPucharse {
   total: number;
   status: PucharseStatusEnum;
   providerId: number;
+  providerName: string;
   storeId: number;
 }
 
@@ -16,6 +17,19 @@ export enum PucharseStatusEnum {
   PAYED = "PAYED",
   PENDING = "PENDING",
 }
+
+export const getPucharseStatusLabel = (status: PucharseStatusEnum): string => {
+  switch (status) {
+    case PucharseStatusEnum.PAYED:
+      return "Pagado";
+    case PucharseStatusEnum.PENDING:
+      return "Pendiente";
+    case PucharseStatusEnum.CANCELED:
+      return "Cancelado";
+    default:
+      return "Desconocido";
+  }
+};
 
 export interface IPucharseCreate {
   invoiceNumber: string;
@@ -28,9 +42,9 @@ export interface IPucharseCreate {
 }
 
 export interface IPucharseUpdate {
-  invoiceNumber: string;
-  orderDate: Date;
-  deliveredDate: Date;
-  status: PucharseStatusEnum;
-  providerId: number;
+  invoiceNumber?: string;
+  orderDate?: Date;
+  deliveredDate?: Date;
+  status?: PucharseStatusEnum;
+  providerId?: number;
 }

@@ -175,7 +175,7 @@ const BoxTableModal = ({
           </div>
           <DataTable
             value={branch ? filteredBoxes : []}
-            tableStyle={{ minWidth: "50rem" }}
+            tableStyle={{ minWidth: "20rem" }}
             className="centered-table"
             paginator
             rows={5}
@@ -195,6 +195,7 @@ const BoxTableModal = ({
                         <Button
                           icon="pi pi-eraser"
                           severity="danger"
+                          tooltip="Eliminar"
                           aria-label="Cancel"
                           onClick={(e) => confirm(e, rowData)}
                         />

@@ -20,12 +20,13 @@ import ModifyDialog from "@/components/modifyDialog";
 import ComboBox from "@/components/ComboBox";
 import { useForm } from "react-hook-form";
 import { FileUpload } from "primereact/fileupload";
-import { ICategoryResponse } from "@/store/interfaces/ICategory";
 import { handleGetAllCategories } from "@/store/api/categoryApi";
+import PageContainer from "@/components/pages/page-container";
 
 export default function DynamicColumnsDemo() {
   const toast = useRef<Toast>(null);
   const [products, setProducts] = useState<IProductResponse[]>([]);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [editVisible, setEditVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
@@ -60,9 +61,11 @@ export default function DynamicColumnsDemo() {
   ];
 
   useEffect(() => {
+    setLoading(true);
     handleGetAllProducts().then((res) => {
       if (res) {
         setProducts(res);
+        setLoading(false);
       }
     });
     handleGetAllCategories().then((res) => {
@@ -253,7 +256,7 @@ export default function DynamicColumnsDemo() {
   };
 
   return (
-    <div className="border p-4 border-opacity-5 bg-gray-700 w-full mx-16">
+    <PageContainer>
       <div className="flex flex-col gap-6">
         <Toast ref={toast} />
         <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
@@ -286,24 +289,33 @@ export default function DynamicColumnsDemo() {
         </div>
         <DataTable
           value={filteredProducts}
-          tableStyle={{ minWidth: "50rem" }}
-          className="centered-table"
+          tableStyle={{ minWidth: "30rem", maxHeight: "30rem" }}
+          className="centered-table md:min-h-[60vh] min-h-[30vh] max-h-[70vh] "
+          size="small"
+          tableClassName="md:min-h-[60vh] min-h-[30vh]  "
+          cellClassName={() => {
+            return "max-h-[10vh]  overflow-hidden";
+          }}
           paginator
+          loading={loading}
           rows={5}
-          rowsPerPageOptions={[5, 10, 25, 50]}
+          rowsPerPageOptions={[5, 10, 15]}
+          scrollable
+          scrollHeight="flex"
         >
           {columns.map((col, i) => {
             if (col.field === "actions") {
               return (
                 <Column
                   key={col.field}
-                  style={{ display: "flex", justifyContent: "center" }}
                   header={col.header}
+                  align={"center"}
                   body={(rowData) => (
                     <div className="action-buttons flex gap-6">
                       <Button
                         icon="pi pi-pencil"
                         severity="info"
+                        tooltip="Modificar"
                         aria-label="User"
                         onClick={() => {
                           handleModify(rowData);
@@ -312,6 +324,7 @@ export default function DynamicColumnsDemo() {
                       <ConfirmPopup />
                       <Button
                         icon="pi pi-eraser"
+                        tooltip="Eliminar"
                         severity="danger"
                         aria-label="Cancel"
                         onClick={(e) => confirm(e, rowData)}
@@ -483,6 +496,6 @@ export default function DynamicColumnsDemo() {
           </form>
         </Dialog>
       </div>
-    </div>
+    </PageContainer>
   );
 }

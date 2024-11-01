@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { KeyFilterType } from "primereact/keyfilter";
 import ModifyUserDialog from "@/components/modifyUserDialog";
 import ComboBox from "@/components/ComboBox";
+import PageContainer from "@/components/pages/page-container";
 
 export default function DynamicColumnsDemo() {
   const toast = useRef<Toast>(null);
@@ -197,7 +198,7 @@ export default function DynamicColumnsDemo() {
   };
 
   return (
-    <div className="border p-4 border-opacity-5 bg-gray-700 w-full m-16">
+    <PageContainer>
       <div className="flex flex-col gap-8">
         <h1 className="text-neutral-100 text-3xl text-center font-bold bg-jair py-3 border-2 border-slate-400 rounded-md">
           <span>
@@ -251,6 +252,7 @@ export default function DynamicColumnsDemo() {
                         icon="pi pi-pencil"
                         severity="info"
                         aria-label="User"
+                        tooltip="Modificar"
                         onClick={() => handleModify(rowData)}
                       />
                       <Toast ref={toast} />
@@ -258,6 +260,7 @@ export default function DynamicColumnsDemo() {
                       <Button
                         icon="pi pi-eraser"
                         severity="danger"
+                        tooltip="Eliminar"
                         aria-label="Cancel"
                         onClick={(e) => confirm(e, rowData)}
                       />
@@ -354,6 +357,6 @@ export default function DynamicColumnsDemo() {
           </div>
         </Dialog>
       </div>
-    </div>
+    </PageContainer>
   );
 }

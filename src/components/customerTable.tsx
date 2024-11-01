@@ -299,6 +299,7 @@ export default function CustomerTable({
                       <Button
                         icon="pi pi-pencil"
                         severity="info"
+                        tooltip="Modificar"
                         aria-label="User"
                         onClick={() => handleModify(rowData)}
                       />
@@ -306,6 +307,7 @@ export default function CustomerTable({
                       <ConfirmPopup />
                       <Button
                         icon="pi pi-eraser"
+                        tooltip="Eliminar"
                         severity="danger"
                         aria-label="Cancel"
                         onClick={(e) => confirm(e, rowData)}

@@ -20,6 +20,7 @@ export default function allInvoice() {
   const [invoices, setInvoices] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showVisible, setShowVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState<IInvoiceResponse>();
   const router = useRouter();
 
@@ -35,9 +36,12 @@ export default function allInvoice() {
   ];
 
   useEffect(() => {
+    setLoading(true);
+
     handleGetAllInvoices().then((res) => {
       if (res) {
         setInvoices(res);
+        setLoading(false);
       }
     });
   }, []);
@@ -108,9 +112,7 @@ export default function allInvoice() {
            * Convertir la respuesta en un blob y descargarlo
            */
           const blob = await res.blob();
-          const url = URL.createObjectURL(blob);
-
-          // Crear un enlace de descarga
+          const url = URL.createObjectURL(blob); // Crear un enlace de descarga
           const link = document.createElement("a");
           link.href = url;
           link.download = rowData.accessKey + ".pdf";
@@ -151,17 +153,24 @@ export default function allInvoice() {
       <DataTable
         value={filteredProducts}
         tableStyle={{ minWidth: "50rem" }}
-        className="centered-table"
+        className="centered-table md:min-h-[60vh] min-h-[30vh] "
+        size="small"
+        tableClassName="md:min-h-[60vh] min-h-[30vh] "
+        cellClassName={() => {
+          return "max-h-[10vh] h-[10vh] overflow-hidden";
+        }}
         paginator
+        loading={loading}
         rows={5}
-        rowsPerPageOptions={[5, 10, 25, 50]}
+        rowsPerPageOptions={[5, 10, 15]}
+        scrollable
+        scrollHeight="flex"
       >
         {columns.map((col, i) => {
           if (col.field === "actions") {
             return (
               <Column
                 key={col.field}
-                style={{ display: "flex", justifyContent: "center" }}
                 header={col.header}
                 body={(rowData) => (
                   <div className="action-buttons flex gap-6">
@@ -177,6 +186,7 @@ export default function allInvoice() {
                     <Button
                       severity="info"
                       icon="pi pi-window-maximize"
+                      tooltip="Ver factura"
                       onClick={() => showInvoice(rowData)}
                     />
                   </div>
@@ -201,8 +211,8 @@ export default function allInvoice() {
       {selectedRowData && (
         <InvoiceInfo
           invoice={selectedRowData}
+          products={selectedRowData.sellingProducts!}
           visible={showVisible}
-          setShowVisible={setShowVisible}
           onHide={() => {
             setShowVisible(false);
           }}
