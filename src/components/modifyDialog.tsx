@@ -149,7 +149,7 @@ export default function ModifyDialog({
         toast.current?.show({
           severity: "success",
           summary: "Confirmed",
-          detail: "Product Updated",
+          detail: "Producto Actualizado",
           life: 3000,
         });
         setProducts((prevState: IProductResponse[]) => {
@@ -162,7 +162,7 @@ export default function ModifyDialog({
         toast.current?.show({
           severity: "error",
           summary: "Error",
-          detail: "Product not Updated",
+          detail: "Producto no actualizado",
           life: 3000,
         });
       }
