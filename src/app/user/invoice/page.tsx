@@ -291,7 +291,7 @@ const invoicer = () => {
   const accept = () => {
     toast.current?.show({
       severity: "info",
-      summary: "SConfirmed",
+      summary: "Confirmado",
       detail: "Ha cancelado la factura",
       life: 3000,
     });

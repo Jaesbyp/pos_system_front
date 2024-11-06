@@ -148,7 +148,7 @@ export default function ModifyDialog({
       if (response) {
         toast.current?.show({
           severity: "success",
-          summary: "Confirmed",
+          summary: "Confirmado",
           detail: "Producto Actualizado",
           life: 3000,
         });

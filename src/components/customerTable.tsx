@@ -103,7 +103,7 @@ export default function CustomerTable({
   const accept = (customer: ICustomerResponse) => {
     toast.current?.show({
       severity: "info",
-      summary: "SConfirmed",
+      summary: "Confirmado",
       detail: "You have accepted",
       life: 3000,
     });

@@ -85,7 +85,7 @@ export default function page() {
   const accept = (category: any) => {
     toast.current?.show({
       severity: "info",
-      summary: "SConfirmed",
+      summary: "Confirmado",
       detail: "You have accepted",
       life: 3000,
     });

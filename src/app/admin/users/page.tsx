@@ -111,7 +111,7 @@ export default function DynamicColumnsDemo() {
   const accept = (user: IUserResponse) => {
     toast.current?.show({
       severity: "info",
-      summary: "SConfirmed",
+      summary: "Confirmado",
       detail: "You have accepted",
       life: 3000,
     });

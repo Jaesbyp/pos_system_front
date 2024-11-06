@@ -74,7 +74,7 @@ export default function ModifyBranchDialog({
       if (response) {
         toast.current?.show({
           severity: "success",
-          summary: "Confirmed",
+          summary: "Confirmado",
           detail: "Sucursal Actualizada",
           life: 3000,
         });
